@@ -220,9 +220,9 @@ struct OooMatrix {
 };
 
 // デフォルトの行列型 Mat はメモリの一部分に密集して保存する SeqMatrix型
-typedef SeqMatrix Mat;
+using Mat = SeqMatrix;
 // デフォルトのベクトル型 Vec は標準ライブラリの vector<double>
-typedef std::vector<double> Vec;
+using Vec = std::vector<double>;
 
 // ==============
 // = 入出力関数 =
@@ -234,7 +234,7 @@ static const char NEWLINE_DELIM = '\n';
 //
 // ファイル名を文字列で受け取って，以下のようなCSVファイルを読み込む．
 //
-// ```example.csv
+// ```test/test1.csv
 // 3,4
 // 1.1,2.2,3.3,4.4
 // 5.5,6.6,7.7,8.8
@@ -244,45 +244,48 @@ static const char NEWLINE_DELIM = '\n';
 // １行目は行の次数と列の次数を指定する．
 // ２〜４行目には行列の要素を浮動小数点で指定する．
 inline Mat read_csv(std::string filename, const char col_delim = ',') {
+  // 入力ファイルストリームの作成
   std::ifstream ifs(filename);
-
   if (!ifs.is_open()) {
     throw std::string("ERROR: CSVファイル " + filename +
                       " が開けませんでした．");
   }
 
+  // CSVの１行目から行の次数 row と列の次数 col を読み取る
   std::string str_buf;
   std::getline(ifs, str_buf, col_delim);
   int row = stoi(str_buf);
   std::getline(ifs, str_buf, NEWLINE_DELIM);
   int col = stoi(str_buf);
 
+  // CSVの２行目以降から行列 mat の要素を読み取る
   Mat mat(row, col);
   std::string col_buf;
   for (int r = 0; r < mat.m_rows; r++) {
+    // １行読み取る
     std::getline(ifs, str_buf, NEWLINE_DELIM);
     std::istringstream line_iss(str_buf);
     for (int c = 0; c < mat.m_cols; c++) {
+      // １列分読み取る
       std::getline(line_iss, col_buf, col_delim);
-
-      std::string err_msg =
+      std::ios::iostate state = line_iss.rdstate();
+      std::string msg =
           std::to_string(r + 1) + "行の" + std::to_string(c + 1) + "列目";
-      // c行目の要素の値が読み取れない
-      if (line_iss.rdstate() & std::ios_base::failbit) {
-        throw std::string("ERROR: " + err_msg + "の要素の値が読み取れません．");
+      // 例外: c行目の要素の値が読み取れない
+      if (state & std::ios_base::failbit) {
+        throw std::string("ERROR: " + msg + "の要素の値が読み取れません．");
       }
-      // r行目の最後まで読み切ったのに，行数が足りないとき
-      if ((line_iss.rdstate() & std::ios_base::eofbit) && c != mat.m_cols - 1) {
-        throw std::string("ERROR: " + err_msg +
-                          "以降の要素の値が読み取れません．");
+      // 例外: r行目の最後まで読み切ったのに，行数が足りない
+      if ((state & std::ios_base::eofbit) && c != mat.m_cols - 1) {
+        throw std::string("ERROR: " + msg + "以降の要素の値が読み取れません．");
       }
 
       // 文字列からdouble型への変換
       try {
         mat[r][c] = std::stod(col_buf);
       } catch (std::invalid_argument const &e) {
-        throw std::string("ERROR: ") + e.what() + err_msg + "の要素の値 \"" +
-            col_buf + "\" はdouble型に変換できません．";
+        throw std::string("ERROR: ") + msg + "の要素の値 \"" + col_buf +
+            "\" はdouble型に変換できません．";
       }
     }
   }
@@ -292,8 +295,8 @@ inline Mat read_csv(std::string filename, const char col_delim = ',') {
 // 行列をCSVファイルとして保存する関数
 inline void save_csv(std::string filename, Mat mat,
                      const char col_delim = ',') {
+  // 出力ファイルストリームの作成
   std::ofstream ofs(filename);
-
   if (!ofs.is_open()) {
     throw std::string("ERROR: 書込ファイル " + filename +
                       " が開けませんでした．");
