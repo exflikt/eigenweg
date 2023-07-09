@@ -52,7 +52,7 @@ struct SeqMatrix {
     }
   }
 
-  // 添字アクセス
+  // 添字アクセス  (*this)[ith_row]
   inline double *operator[](const int ith_row) {
     return (double *)m_data.data() + ith_row * m_cols;
   }
@@ -60,7 +60,7 @@ struct SeqMatrix {
     return m_data.data() + ith_row * m_cols;
   };
 
-  // 行列どうしの等価性
+  // 行列どうしの等価性  *this == rhs
   inline bool operator==(const SeqMatrix &rhs) {
     if (this->m_rows != rhs.m_rows || this->m_cols != rhs.m_cols) {
       throw std::string("ERROR: 行列の次数が異なります．");
@@ -76,30 +76,15 @@ struct SeqMatrix {
     return true;
   }
 
-  inline bool operator==(SeqMatrix &rhs) {
-    if (this->m_rows != rhs.m_rows || this->m_cols != rhs.m_cols) {
-      throw std::string("ERROR: 行列の次数が異なります．");
-    }
-
-    for (int r = 0; r < m_rows; r++) {
-      for (int c = 0; c < m_cols; c++) {
-        if ((*this)[r][c] != rhs[r][c]) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  // 行列どうしの非等価性（等価性の否定）
+  // 行列どうしの非等価性（等価性の否定） *this != rhs
   inline bool operator!=(const SeqMatrix &rhs) { return !(*this == rhs); }
 
-  // 行列加算（A += B）
+  // 行列加算  *this += rhs
   //
-  // なお，自身の行列Aと他の行列Bを足し合わせた A + B を計算する加算メソッドを
-  // 定義することもできるが，その場合新たにメモリ領域を確保しなければならないの
-  // で計算時間に影響する．必要なとき以外はなるべく上書きする形で加算を計算した
-  // ほうが効率がよい．
+  // なお，自身の行列 *this と他の行列 rhs を足し合わせた res = *this + rhs を
+  // 計算する加算メソッドを定義することもできるが，その場合新たにメモリ領域を確
+  // 保しなければならなず，計算時間に影響する．必要なとき以外はなるべく上書きす
+  // る形で加算を計算した ほうが効率がよい．
   inline SeqMatrix &operator+=(const SeqMatrix &rhs) {
     if (this->m_rows != rhs.m_rows || this->m_cols != rhs.m_cols) {
       // 行列の次数が異なっても加算したい場合はここの処理を変えるとよい．
@@ -116,7 +101,7 @@ struct SeqMatrix {
     return *this;
   }
 
-  // 行列減算（A -= B）
+  // 行列減算  *this -= rhs
   inline SeqMatrix &operator-=(const SeqMatrix &rhs) {
     if (this->m_rows != rhs.m_rows || this->m_cols != rhs.m_cols) {
       throw std::string("ERROR: 行列の次数が異なります．");
@@ -130,10 +115,11 @@ struct SeqMatrix {
     return *this;
   }
 
-  // 行列積（C = A · B）
+  // 行列積  res = *this · rhs
   //
-  // このメソッドを実行すると，計算結果の行列を保存するためのメモリ領域を確保し
-  // なければならない．そのため，頻繁に呼び出さないように注意する必要がある．
+  // このメソッドを実行すると，計算結果の行列（res）を保存するためのメモリ領域
+  // を確保しなければならない．そのため，頻繁に呼び出さないように注意する必要が
+  // ある．
   SeqMatrix dot(const SeqMatrix &rhs) {
     if (this->m_cols != rhs.m_rows) {
       throw std::string(
@@ -152,7 +138,7 @@ struct SeqMatrix {
     return res;
   }
 
-  // 単位行列
+  // n x n 単位行列
   static const SeqMatrix id(int n) {
     SeqMatrix mat(n, n);
     for (int i = 0; i < n; i++) {
@@ -161,7 +147,7 @@ struct SeqMatrix {
     return mat;
   }
 
-  // 零行列
+  // rows x cols 零行列
   static const SeqMatrix zero(int rows, int cols) {
     SeqMatrix mat(rows, cols);
     for (int r = 0; r < rows; r++) {
@@ -185,8 +171,8 @@ struct SeqMatrix {
 
 // OooMatrix: 各行ベクトルをヒープの至るところに配置する ROWS x COLS 行列
 //
-// 各行に対してスマートポインタ（vector<double>）を対応させているので，
-// データの保存場所はバラバラであり，順番が揃っていない（Out of order）．
+// 各行に対してスマートポインタ（vector<double>）を対応させているので，データの
+// 保存場所はバラバラで順番が揃っていない（Out of order）．
 // OooMatrixはSeqMatrixと違って，メモリキャッシュ局所性を有効活用できない．
 // ただし，行の入れ替えは単にポインタの入れ替えで済むのでO(1)である．
 // 要素の型は倍精度浮動小数点（double）である．
@@ -209,7 +195,7 @@ struct OooMatrix {
     }
   }
 
-  // 添字アクセス
+  // 添字アクセス  (*this)[ith_row]
   std::vector<double> operator[](const int ith_row) { return m_data[ith_row]; }
   const std::vector<double> operator[](const int ith_row) const {
     return m_data[ith_row];
@@ -232,7 +218,7 @@ static const char NEWLINE_DELIM = '\n';
 
 // CSVファイルを読み込んで行列に変換する関数
 //
-// ファイル名を文字列で受け取って，以下のようなCSVファイルを読み込む．
+// 以下のようなCSVファイル名を文字列で受け取って，3 x 4 の行列を読み込む．
 //
 // ```test/test1.csv
 // 3,4
@@ -243,6 +229,9 @@ static const char NEWLINE_DELIM = '\n';
 //
 // １行目は行の次数と列の次数を指定する．
 // ２〜４行目には行列の要素を浮動小数点で指定する．
+//
+// ファイルの入力を取り扱うので，随所で例外処理を行っている．文字列をスローする
+// ので，catch ブロックは std::string を受け取ることができる．
 inline Mat read_csv(std::string filename, const char col_delim = ',') {
   // 入力ファイルストリームの作成
   std::ifstream ifs(filename);
@@ -280,7 +269,7 @@ inline Mat read_csv(std::string filename, const char col_delim = ',') {
         throw std::string("ERROR: " + msg + "以降の要素の値が読み取れません．");
       }
 
-      // 文字列からdouble型への変換
+      // 文字列から double 型への変換
       try {
         mat[r][c] = std::stod(col_buf);
       } catch (std::invalid_argument const &e) {
@@ -293,6 +282,9 @@ inline Mat read_csv(std::string filename, const char col_delim = ',') {
 }
 
 // 行列をCSVファイルとして保存する関数
+//
+// ファイルの出力を取り扱うので，例外処理を行っている．文字列をスローするので，
+// catch ブロックは std::string を受け取ることができる．
 inline void save_csv(std::string filename, Mat mat,
                      const char col_delim = ',') {
   // 出力ファイルストリームの作成
@@ -303,7 +295,7 @@ inline void save_csv(std::string filename, Mat mat,
   }
 
   // 1行目に行の次数と列の次数を書き込む．
-  ofs << mat.m_rows << col_delim << mat.m_cols << '\n';
+  ofs << mat.m_rows << col_delim << mat.m_cols << NEWLINE_DELIM;
 
   // 2行目以降に行列の要素を書き込む．
   if (/* mat.m_rows > 0 && */ mat.m_cols > 0) {
@@ -312,7 +304,7 @@ inline void save_csv(std::string filename, Mat mat,
       for (int c = 1; c < mat.m_cols; c++) {
         ofs << col_delim << mat[r][c];
       }
-      ofs << '\n';
+      ofs << NEWLINE_DELIM;
     }
   }
 
