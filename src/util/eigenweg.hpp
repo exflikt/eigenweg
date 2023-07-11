@@ -255,26 +255,30 @@ inline Mat read_csv(std::string filename, const char col_delim = ',') {
     std::getline(ifs, str_buf, NEWLINE_DELIM);
     std::istringstream line_iss(str_buf);
     for (int c = 0; c < mat.m_cols; c++) {
-      // １列分読み取る
+      // １要素読み取る
       std::getline(line_iss, col_buf, col_delim);
-      std::ios::iostate state = line_iss.rdstate();
-      std::string msg =
-          std::to_string(r + 1) + "行の" + std::to_string(c + 1) + "列目";
-      // 例外: c行目の要素の値が読み取れない
-      if (state & std::ios_base::failbit) {
-        throw std::string("ERROR: " + msg + "の要素の値が読み取れません．");
+      // 例外: r 行目の最後まで読み切ったのに，行数が足りない
+      if ((line_iss.rdstate() & std::ios_base::eofbit) && c != mat.m_cols - 1) {
+        throw(std::ostringstream() << "ERROR: " << r + 1 << "行の" << c + 1
+                                   << "列目以降の要素の値が読み取れません．")
+            .str();
       }
-      // 例外: r行目の最後まで読み切ったのに，行数が足りない
-      if ((state & std::ios_base::eofbit) && c != mat.m_cols - 1) {
-        throw std::string("ERROR: " + msg + "以降の要素の値が読み取れません．");
+      // 例外: cols 行まで読み取ったのにまで後続のフィールドが存在する
+      if (!(line_iss.rdstate() & std::ios_base::eofbit) &&
+          c == mat.m_cols - 1) {
+        throw(std::ostringstream()
+              << "ERROR: " << r + 1 << "行目の列の次数 " << mat.m_cols
+              << " 以降に余分な値が存在します．")
+            .str();
       }
-
       // 文字列から double 型への変換
       try {
         mat[r][c] = std::stod(col_buf);
       } catch (std::invalid_argument const &e) {
-        throw std::string("ERROR: ") + msg + "の要素の値 \"" + col_buf +
-            "\" はdouble型に変換できません．";
+        throw(std::ostringstream()
+              << "ERROR: " << r + 1 << "行" << c + 1 << "列の要素の値 \""
+              << col_buf << "\" はdouble型に変換できません．")
+            .str();
       }
     }
   }
