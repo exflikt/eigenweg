@@ -48,7 +48,6 @@ void cannot_not_read_onwards_from_3_2_in_csv_test2() {
   try {
     eigenweg::read_csv("test2.csv");
   } catch (std::string msg) {
-    std::cerr << msg << std::endl;
     assert(msg == "ERROR: 3行の2列目以降の要素の値が読み取れません．");
   }
 }
