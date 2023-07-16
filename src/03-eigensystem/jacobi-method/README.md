@@ -1,0 +1,16 @@
+Status: 動作テスト中
+
+# 走らせ方
+このディレクトリで `make` コマンドを実行してコンパイルできます．なお，以下のように file.csv というCSVファイルを引数としてバイナリを実行すると，固有値が vals-file.csv に，固有ベクトルが vecs-file.csv に保存されます．
+
+```
+make
+./jacobi file.csv
+```
+
+計算結果をコンソールに出力したい場合は，デバッグバイナリをコンパイルして実行できます．
+
+```
+make compile-dbg
+./jacobi-dbg file.csv
+```
