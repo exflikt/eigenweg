@@ -304,7 +304,7 @@ int main(const int argc, const char **argv) {
     for (int i = 0; i < jac.m_n - 1; i++) {
       cerr << jac.m_vals[i] << ", ";
     }
-    cerr << jac.m_vals[jac.m_n] << "]\n";
+    cerr << jac.m_vals[jac.m_n - 1] << "]\n";
 
     cerr << "固有ベクトル:\n";
     jac.m_vecs.dbg_print();
@@ -325,7 +325,7 @@ int main(const int argc, const char **argv) {
     for (int i = 0; i < jac.m_n - 1; i++) {
       vals_ofs << jac.m_vals[i] << ",";
     }
-    vals_ofs << jac.m_vals[jac.m_n] << endl;
+    vals_ofs << jac.m_vals[jac.m_n - 1] << endl;
 
     eigenweg::save_csv(filedir + "vecs-" + filename, jac.m_vecs);
 
