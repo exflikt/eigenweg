@@ -22,7 +22,7 @@ make compile-dbg
 ls test | grep -Ev '^(vals|vecs)' | while read f; do
     echo "\n[test/$f]"
     ./jacobi-dbg "test/$f"
-done
+done &>test.log
 ```
 
 * [test/example-3.csv](test/example-3.csv): 6.2 例3 (1) 139 p.
