@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#
 # numpy.linalg.eig 関数 と入力したファイルの誤差を計算するスクリプト
 #
 # Usage:
