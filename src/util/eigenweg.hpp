@@ -1,5 +1,4 @@
-#ifndef EIGENWEG_HPP
-#define EIGENWEG_HPP
+#pragma once
 
 #include <fstream>
 #include <iostream>
@@ -319,5 +318,3 @@ inline void save_csv(std::string filename, Mat mat,
 }
 
 } // namespace eigenweg
-
-#endif

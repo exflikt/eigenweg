@@ -1,5 +1,4 @@
-#ifndef JACOBI_HPP
-#define JACOBI_HPP
+#pragma once
 
 #include "eigenweg.hpp"
 #include <cmath>
@@ -288,5 +287,3 @@ inline void eigensort(Vec &vals, Mat &vecs) {
 }
 
 } // namespace eigenweg
-
-#endif
