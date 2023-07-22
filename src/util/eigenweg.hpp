@@ -1,7 +1,9 @@
 #pragma once
 
 #include <fstream>
+#include <iomanip>
 #include <iostream>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -305,6 +307,7 @@ inline void save_csv(std::string filename, Mat mat,
 
   // 2行目以降に行列の要素を書き込む．
   if (/* mat.m_rows > 0 && */ mat.m_cols > 0) {
+    ofs << std::setprecision(std::numeric_limits<double>::max_digits10);
     for (int r = 0; r < mat.m_rows; r++) {
       ofs << mat[r][0];
       for (int c = 1; c < mat.m_cols; c++) {

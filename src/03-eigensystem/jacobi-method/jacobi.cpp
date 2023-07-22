@@ -1,4 +1,3 @@
-#include "eigenweg.hpp"
 #include "jacobi.hpp"
 
 using namespace std;
@@ -41,6 +40,7 @@ int main(const int argc, const char **argv) {
     }
 
     ofstream vals_ofs(filedir + "vals-" + filename);
+    vals_ofs << setprecision(numeric_limits<double>::max_digits10);
     vals_ofs << jac.m_vals.size() << "\n";
     for (int i = 0; i < jac.m_n - 1; i++) {
       vals_ofs << jac.m_vals[i] << ",";
