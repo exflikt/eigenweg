@@ -51,8 +51,8 @@ struct Jacobi {
   // ヤコビ回転の回数カウンタ
   int m_nrot;
 
-  Jacobi(Mat &mat)
-      : m_n(mat.m_rows), m_mat(mat), m_vals(m_n), m_vecs(Mat::id(m_n)),
+  Jacobi(Mat &sym_mat)
+      : m_n(sym_mat.m_rows), m_mat(sym_mat), m_vals(m_n), m_vecs(Mat::id(m_n)),
         m_nrot(0) {
     throw_when_nonsymmetric(m_mat);
 
