@@ -2,7 +2,6 @@
 
 #include "eigenweg.hpp"
 #include <cmath>
-#include <limits>
 
 namespace eigenweg {
 
