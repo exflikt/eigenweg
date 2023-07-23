@@ -12,7 +12,7 @@ echo -n "" > $DETERMINANT_RECORD
 echo -n "" > $CLOCK_RECORD
 echo -n "" > $DATA_FILE
 
-for i in $(seq 50 50 500) $(seq 600 100 1000) # N
+for i in {2..12} # $(seq 50 50 500) $(seq 600 100 1000) # N
 do
   for j in {0..9} # seed
   do
