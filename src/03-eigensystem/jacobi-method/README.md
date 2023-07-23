@@ -2,18 +2,18 @@ Status: 動作テスト中
 
 # 実行方法
 
-このディレクトリで `make` コマンドを実行してコンパイルできます．以下のように file.csv というCSVファイルを引数としてバイナリを実行すると，固有値が vals-file.csv に，固有ベクトルが vecs-file.csv に保存されます．アルゴリズムの性質上，対称行列しか計算できないので，非対称行列のデータを入れるとエラーになります．
+このディレクトリで `make` コマンドを実行してコンパイルできます．以下のように mat.csv というCSVファイルを引数としてバイナリを実行すると，固有値が vals.csv に，固有ベクトルが vecs.csv に保存されます．アルゴリズムの性質上，対称行列しか計算できないので，非対称行列のデータを入れるとエラーになります．
 
 ```
 make
-./jacobi file.csv
+./jacobi mat.csv vals.csv vecs.csv
 ```
 
 計算結果をコンソールに出力したい場合は，デバッグバイナリをコンパイルして実行できます．
 
 ```
 make compile-dbg
-./jacobi-dbg file.csv
+./jacobi-dbg mat.csv vals.csv vecs.csv
 ```
 
 # テスト
@@ -21,7 +21,7 @@ make compile-dbg
 ```
 ls test | grep -Ev '^(vals|vecs)' | while read f; do
     echo "\n[test/$f]"
-    ./jacobi-dbg "test/$f"
+    ./jacobi-dbg "test/$f" "test/vals-$f" "test/vecs-$f"
 done &>test.log
 ```
 

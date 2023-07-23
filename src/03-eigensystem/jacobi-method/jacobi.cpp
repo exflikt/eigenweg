@@ -6,14 +6,18 @@ using Mat = eigenweg::Mat;
 using Jacobi = eigenweg::Jacobi;
 
 int main(const int argc, const char **argv) {
-  if (argc != 2) {
-    cerr << "ERROR: コマンドの引数でCSVファイルを指定してください．" << endl;
+  if (argc != 4) {
+    cerr << "ERROR: コマンドの引数で入出力のCSVファイルを指定してください．"
+         << endl;
     return 1;
   }
-  string filepath(argv[1]);
+
+  string mat_input_path(argv[1]);
+  string vals_output_path(argv[2]);
+  string vecs_output_path(argv[3]);
 
   try {
-    Mat mat = eigenweg::read_csv(filepath);
+    Mat mat = eigenweg::read_csv(mat_input_path);
     clock_t time = clock();
     Jacobi jac(mat);
     double elapsed_sec = (double)(clock() - time) / (CLOCKS_PER_SEC);
@@ -29,17 +33,7 @@ int main(const int argc, const char **argv) {
     jac.m_vecs.dbg_print();
 #endif
 
-    string filedir, filename;
-    size_t last_slash_pos = filepath.find_last_of("/\\");
-    if (last_slash_pos != string::npos) {
-      filedir = filepath.substr(0, last_slash_pos + 1);
-      filename = filepath.substr(last_slash_pos + 1);
-    } else {
-      filedir = "";
-      filename = filepath;
-    }
-
-    ofstream vals_ofs(filedir + "vals-" + filename);
+    ofstream vals_ofs(vals_output_path);
     vals_ofs << setprecision(numeric_limits<double>::max_digits10);
     vals_ofs << jac.m_vals.size() << "\n";
     for (int i = 0; i < jac.m_n - 1; i++) {
@@ -47,7 +41,7 @@ int main(const int argc, const char **argv) {
     }
     vals_ofs << jac.m_vals[jac.m_n - 1] << endl;
 
-    eigenweg::save_csv(filedir + "vecs-" + filename, jac.m_vecs);
+    eigenweg::save_csv(vecs_output_path, jac.m_vecs);
 
     cout << "ヤコビ回転の回数: " << jac.m_nrot << "\n";
     cout << "計算時間 [s]: " << elapsed_sec << endl;
