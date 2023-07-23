@@ -45,7 +45,7 @@ bash measure.sh
 
 $\mathrm{for}\ c\ (1\le c\le N)$ :
 1. $\mathrm{if}\ a_{cc} = 0$ :  
-    1. $a_{ic} \neq 0\ (i \gt c)$ となる $i$ を探し，$A$ の行 $c$ と $i$ を ``swap`` する．$i$ が見つからない場合は行列式は $0$ として終了する．
+    1. $a_{ic} \neq 0\ (i \gt c)$ となる $i$ を探し， $A$ の行 $c$ と $i$ を ``swap`` する． $i$ が見つからない場合は行列式は $0$ として終了する．
     2.  $\mathrm{determinant}\gets -\mathrm{determinant}$
 2. $\mathrm{pivot} \gets a_{cc}$
 3. $\mathrm{determinant}\gets \mathrm{determinant} \cdot \mathrm{pivot}$
