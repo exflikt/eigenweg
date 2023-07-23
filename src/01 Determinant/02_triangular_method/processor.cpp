@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
   }
   clock_t end = clock();
   std::cout << std::setprecision(significant_figures) << determinant << std::endl;
-  std::cout << end - start << std::endl;
+  std::cout << (double)(end - start)/CLOCKS_PER_SEC << std::endl;
   return 0;
 }
 
