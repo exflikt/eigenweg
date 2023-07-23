@@ -50,7 +50,6 @@ bool get_data(std::vector<std::vector<double>>& mat, const std::string& file_nam
   if (!data_file.is_open()) return true;
   int n;
   data_file >> std::dec >> n;
-  mat.reserve(n*n);
   mat = std::vector<std::vector<double>>(n, std::vector<double>(n, 0));
   for (std::vector<double>& mat_row: mat) {
     for (double& x: mat_row) {
