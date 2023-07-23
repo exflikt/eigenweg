@@ -2,7 +2,7 @@
 
 set -e
 
-for n in 10 20 50 100 200 500 1000; do
+for n in $(seq 50 50 500) $(seq 600 100 1000); do
 	echo "[${n}x${n} matrix]"
 	for id in $(seq 9); do
 		echo "* $id"
