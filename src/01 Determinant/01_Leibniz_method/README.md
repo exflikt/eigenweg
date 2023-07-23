@@ -16,8 +16,8 @@ results/clock.csv：処理時間[s]
 ```
 N seed process_time[s]
 ```
-### 実行時間
-##### シェルスクリプト
+### 計測方法
+##### シェルスクリプトで行う場合
 ``00_Experiments`` に移動し，``settings.json`` を次のように変更する．
 ```
 {
@@ -31,7 +31,7 @@ N seed process_time[s]
 ```
 bash measure.sh
 ```
-##### 直接
+##### 直接行う場合
 ``01_Leibniz_method/data.csv`` を変更する．  
 ``01_Leibniz_method`` において，次のコマンドを実行する．
 ```
