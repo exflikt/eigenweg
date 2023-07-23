@@ -21,7 +21,7 @@ do
     read -r DETERMINANT CLOCK <<< "$(echo -e "$CPP" | tr '\n' '\t')"
     echo "$i $j $CLOCK" >> $CLOCK_RECORD
     PYTHON=`python3 $EXACT_PROCESSOR`
-    echo $i $DETERMINANT $PYTHON >> $DETERMINANT_RECORD
+    echo $i $j $DETERMINANT $PYTHON >> $DETERMINANT_RECORD
   done
   echo "${i}"
 done
