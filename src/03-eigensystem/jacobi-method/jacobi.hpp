@@ -206,9 +206,10 @@ struct Jacobi {
       }
     }
 
-    throw(std::ostringstream() << "ERROR: 反復処理の繰り返し回数が許容限度（"
-                               << LIMIT << "回）を超えました．")
-        .str();
+    std::ostringstream oss;
+    oss << "ERROR: 反復処理の繰り返し回数が許容限度（" << LIMIT
+        << "回）を超えました．";
+    throw oss.str();
   }
 
   // (i, j) 要素と (k, l) 要素の φ 回転
@@ -243,11 +244,11 @@ inline void throw_when_nonsymmetric(Mat mat) {
   for (int r = 0; r < n; r++) {
     for (int c = r + 1; c < n; c++) {
       if (mat[r][c] != mat[c][r]) {
-        throw(std::ostringstream()
-              << "ERROR: " << r << "行" << c << "列"
-              << "と" << c << "行" << r << "列"
-              << "の要素が一致していないので対称行列でありません．")
-            .str();
+        std::ostringstream oss;
+        oss << "ERROR: " << r << "行" << c << "列"
+            << "と" << c << "行" << r << "列"
+            << "の要素が一致していないので対称行列でありません．";
+        throw oss.str();
       }
     }
   }
