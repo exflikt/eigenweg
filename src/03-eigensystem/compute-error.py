@@ -55,7 +55,7 @@ rms = lambda array : np.sqrt(np.sum(array ** 2) / n)
 
 eprint()
 eprint('--- Result ---')
-print('vals_rms =', rms(ans_vals - vals))
+print(f'vals_rms: {rms(ans_vals - vals)}')
 vecs_rms_total = 0
 for i in range(n):
     # 固有ベクトルは正負が反対になっている可能性があるので
@@ -65,5 +65,5 @@ for i in range(n):
     c = rms(+ ans_vecs[:, i] - vecs[:, i])
     eprint(f'rms of vecs[:, {i}] = {min(a, b, c)}')
     vecs_rms_total += min(a, b, c)
-print(f'vecs_rms_avg = {vecs_rms_total / n}')
+print(f'vecs_rms_avg: {vecs_rms_total / n}')
 eprint('--------------')
