@@ -35,6 +35,6 @@ done &>test.log
 * [test/exercise-problem-2-2.csv](test/exercise-problem-2-2.csv): 6章 演習２ (2) 149 p.
 * [test/exercise-problem-2-3.csv](test/exercise-problem-2-3.csv): 6章 演習２ (3) 149 p.
 
-固有値は降順にソートされている．
-固有ベクトルは正規化（ノルムを1に）していて，また符号が逆になっている可能性があるので注意する．
+固有値は降順にソートされています．
+固有ベクトルは正規化（ノルムを1に）していて，また符号が逆になっている可能性があるので注意してください．
 
