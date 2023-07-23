@@ -1,0 +1,6 @@
+{
+  "processor": "../02_triangular_method/processor",
+  "data_file": "../02_triangular_method/results/data.csv",
+  "determinant_record": "../02_triangular_method/results/determinant.csv",
+  "clock_record": "../02_triangular_method/results/clock.csv"
+}
