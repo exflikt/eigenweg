@@ -263,26 +263,27 @@ inline Mat read_csv(std::string filename, const char col_delim = ',') {
       std::getline(line_iss, col_buf, col_delim);
       // 例外: r 行目の最後まで読み切ったのに，行数が足りない
       if ((line_iss.rdstate() & std::ios_base::eofbit) && c != mat.m_cols - 1) {
-        throw(std::ostringstream() << "ERROR: " << r + 1 << "行の" << c + 1
-                                   << "列目以降の要素の値が読み取れません．")
-            .str();
+        std::ostringstream oss;
+        oss << "ERROR: " << r + 1 << "行の" << c + 1
+            << "列目以降の要素の値が読み取れません．";
+        throw oss.str();
       }
       // 例外: cols 行まで読み取ったのにまで後続のフィールドが存在する
       if (!(line_iss.rdstate() & std::ios_base::eofbit) &&
           c == mat.m_cols - 1) {
-        throw(std::ostringstream()
-              << "ERROR: " << r + 1 << "行目の列の次数 " << mat.m_cols
-              << " 以降に余分な値が存在します．")
-            .str();
+        std::ostringstream oss;
+        oss << "ERROR: " << r + 1 << "行目の列の次数 " << mat.m_cols
+            << " 以降に余分な値が存在します．";
+        throw oss.str();
       }
       // 文字列から double 型への変換
       try {
         mat[r][c] = std::stod(col_buf);
       } catch (std::invalid_argument const &e) {
-        throw(std::ostringstream()
-              << "ERROR: " << r + 1 << "行" << c + 1 << "列の要素の値 \""
-              << col_buf << "\" はdouble型に変換できません．")
-            .str();
+        std::ostringstream oss;
+        oss << "ERROR: " << r + 1 << "行" << c + 1 << "列の要素の値 \""
+            << col_buf << "\" はdouble型に変換できません．";
+        throw oss.str();
       }
     }
   }
