@@ -14,12 +14,12 @@ echo -n "" > $DATA_FILE
 
 for i in $(seq 50 50 500) $(seq 600 100 1000) # N
 do
-  for j in {0..0} # seed
+  for j in {0..9} # seed
   do
     ./data_generator $DATA_FILE $i $j
     CPP=$($PROCESSOR $DATA_FILE)
     read -r DETERMINANT CLOCK <<< "$(echo -e "$CPP" | tr '\n' '\t')"
-    echo "$i $CLOCK" >> $CLOCK_RECORD
+    echo "$i $j $CLOCK" >> $CLOCK_RECORD
     PYTHON=`python3 $EXACT_PROCESSOR`
     echo $i $DETERMINANT $PYTHON >> $DETERMINANT_RECORD
   done
