@@ -41,16 +41,21 @@ bash measure.sh
 ```
 ./processor results/data.csv 0
 ```
-出力は５つに分かれる．
-- 非斉次，ただ一つの解  
-  $$A_+=\begin{pmatrix}
-  1 & 1 & 1 & 10 \\
-  1 & 4 & 2 & 17 \\
-  2 & 3 & 1 & 17 
-  \end{pmatrix}$$
-  $$\mathbf{x}=\begin{pmatrix}
-  5 \\ 1 \\ 4
-  \end{pmatrix}$$
+出力は５つに分かれる．  
+
+- 非斉次，ただ一つの解
+```math
+A_+=\begin{pmatrix}
+1 & 1 & 1 & 10 \\
+1 & 4 & 2 & 17 \\
+2 & 3 & 1 & 17 
+\end{pmatrix}
+```
+```math
+\mathbf{x}=\begin{pmatrix}
+5 \\ 1 \\ 4
+\end{pmatrix}
+```
   ```
   非斉次，ただ１つの解を持つ．
   解:
@@ -59,18 +64,22 @@ bash measure.sh
   6e-06
   ```
 - 非斉次，無数の解
-  $$A_+=\begin{pmatrix}
-  1 & 2 & 3 & 4 \\
-  2 & 3 & 4 & 5 \\
-  3 & 4 & 5 & 6 
-  \end{pmatrix}$$
-  $$\begin{pmatrix}
-  x_1 \\ x_2
-  \end{pmatrix}=\begin{pmatrix}
-  1 \\ -2
-  \end{pmatrix}x_3+\begin{pmatrix}
-  -2 \\ 3
-  \end{pmatrix}$$
+```math
+A_+=\begin{pmatrix}
+1 & 2 & 3 & 4 \\
+2 & 3 & 4 & 5 \\
+3 & 4 & 5 & 6 
+\end{pmatrix}$$
+```
+```math
+\begin{pmatrix}
+x_1 \\ x_2
+\end{pmatrix}=\begin{pmatrix}
+1 \\ -2
+\end{pmatrix}x_3+\begin{pmatrix}
+-2 \\ 3
+\end{pmatrix}
+```
   ```
   非斉次，無数の解を持つ．
   解の自由度: 1
@@ -85,11 +94,13 @@ bash measure.sh
   5e-06
   ```
 - 解なし
-  $$A_+=\begin{pmatrix}
-  1 & 2 & 3 & 4 \\
-  2 & 4 & 6 & 6 \\
-  2 & 6 & 9 & 9 
-  \end{pmatrix}$$
+```math
+A_+=\begin{pmatrix}
+1 & 2 & 3 & 4 \\
+2 & 4 & 6 & 6 \\
+2 & 6 & 9 & 9 
+\end{pmatrix}$$
+```
   ```
   解なし
   係数行列のrank: 2，拡大係数行列のrank: 3
@@ -97,16 +108,20 @@ bash measure.sh
   1.1e-05
   ```
 - 斉次，非自明解をもつ
-  $$A_+=\begin{pmatrix}
-  1 & 2 & 3 & 0 \\
-  2 & 3 & 4 & 0 \\
-  3 & 4 & 5 & 0 
-  \end{pmatrix}$$
-  $$\begin{pmatrix}
-  x_1 \\ x_2
-  \end{pmatrix}=\begin{pmatrix}
-  1 \\ -2
-  \end{pmatrix}x_3$$
+```math
+A_+=\begin{pmatrix}
+1 & 2 & 3 & 0 \\
+2 & 3 & 4 & 0 \\
+3 & 4 & 5 & 0 
+\end{pmatrix}
+```
+```math
+\begin{pmatrix}
+x_1 \\ x_2
+\end{pmatrix}=\begin{pmatrix}
+1 \\ -2
+\end{pmatrix}x_3
+```
   ```
   斉次，非自明解を持つ．
   解の自由度: 1
@@ -120,13 +135,19 @@ bash measure.sh
   4e-06
   ```
 - 斉次，自明解のみをもつ
-  $$A_+=\begin{pmatrix}
-  1 & 1 & 1 & 0 \\
-  1 & 2 & 1 & 0 \\
-  2 & 1 & 0 & 0 
-  \end{pmatrix}$$
-  $$\mathbf{x}=\mathbf{0}$$
-
+```math
+A_+=\begin{pmatrix}
+1 & 1 & 1 & 0 \\
+1 & 2 & 1 & 0 \\
+2 & 1 & 0 & 0 
+\end{pmatrix}
+```
+$$\mathbf{x}=\mathbf{0}$$
+  ```
+  斉次，自明解のみを持つ．
+  処理時間：
+  5e-06
+  ```
 ### 理論
 拡大係数行列を行に関する基本変形を行うことによって，行階段形を作る．係数行列が単位行列に変換できれば拡大係数行列の一番右側の列が解となる．単位行列にならない場合は拡大係数行列と係数行列のランクを比較し，解を判定する.
 - 拡大係数行列: $A_+=\{a_{ij}\}$
