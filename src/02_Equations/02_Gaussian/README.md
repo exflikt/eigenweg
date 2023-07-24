@@ -158,7 +158,7 @@ $$\mathbf{x}=\mathbf{0}$$
 1. 非斉次である場合 $N_{col}=N+1$ ，斉次である場合 $N_{col}=N$
 2. $i\gets 0$
 3. $\mathrm{for}\ j\ (1\le j\le N)$ :
-    1. $i\le i_2\le N$ に対し，$a_{i_2j}\neq0$ である $i_2$ を探し，$i$ 行と $i_2$ 行を `swap` する．そのような $i_2$ がない場合，`continue` する．
+    1. $i\le i_2\le N$ に対し， $a_{i_2j}\neq0$ である $i_2$ を探し， $i$ 行と $i_2$ 行を `swap` する．そのような $i_2$ がない場合，`continue` する．
     2. $\mathrm{pivot}\gets a_{i_2j}$
     3. $\mathrm{for}\ j_2\ (j+1\le j_2\le N_{col})$ :
         1. $\displaystyle a_{ij_2}\gets \frac{a_{ij_2}}{\mathrm{pivot}}$
