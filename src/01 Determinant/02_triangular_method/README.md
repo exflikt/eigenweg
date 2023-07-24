@@ -40,17 +40,17 @@ bash measure.sh
 ### 理論
 上三角行列を作り，対角線上の要素の総乗を出力する．  
 - 行列: $A=\{a_{ij}\}$
+- 行列の次数: $N$
 - 行列式: $\mathrm{determinant\gets 1}$  
 - 対角線上の要素: $\mathrm{pivot}$  
 
-$\mathrm{for}\ c\ (1\le c\le N)$ :
-1. $\mathrm{if}\ a_{cc} = 0$ :  
-    1. $a_{ic} \neq 0\ (i \gt c)$ となる $i$ を探し， $A$ の行 $c$ と $i$ を ``swap`` する． $i$ が見つからない場合は行列式は $0$ として終了する．
-    2.  $\mathrm{determinant}\gets -\mathrm{determinant}$
-2. $\mathrm{pivot} \gets a_{cc}$
-3. $\mathrm{determinant}\gets \mathrm{determinant} \cdot \mathrm{pivot}$
-4. $\mathrm{for}\ i\ (c\lt i\le N)$ :  
-    1. $\mathrm{for}\ j\ (c\lt j\le N)$ :  
-        1. $\displaystyle a_{ij}\gets a_{ij}-\frac{a_{cj}\cdot a_{ic}}{\mathrm{pivot}}$  
-
-$\mathrm{determinant}$ を行列式として出力する．
+1. $\mathrm{for}\ c\ (1\le c\le N)$ :  
+    1. $\mathrm{if}\ a_{cc} = 0$ :  
+        1. $a_{ic} \neq 0\ (i \gt c)$ となる $i$ を探し， $A$ の行 $c$ と $i$ を ``swap`` する． $i$ が見つからない場合は行列式は $0$ として終了する．
+        2.  $\mathrm{determinant}\gets -\mathrm{determinant}$
+    2. $\mathrm{pivot} \gets a_{cc}$
+    3. $\mathrm{determinant}\gets \mathrm{determinant} \cdot \mathrm{pivot}$
+    4. $\mathrm{for}\ i\ (c\lt i\le N)$ :  
+        1. $\mathrm{for}\ j\ (c\lt j\le N)$ :  
+            1. $\displaystyle a_{ij}\gets a_{ij}-\frac{a_{cj}\cdot a_{ic}}{\mathrm{pivot}}$  
+2. $\mathrm{determinant}$ を行列式として出力する．

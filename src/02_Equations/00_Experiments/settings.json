@@ -1,0 +1,6 @@
+{
+  "processor": "../02_Gaussian/processor",
+  "data_file": "../02_Gaussian/results/data.csv",
+  "equation_record": "../02_Gaussian/results/equation.csv",
+  "clock_record": "../02_Gaussian/results/clock.csv"
+}
