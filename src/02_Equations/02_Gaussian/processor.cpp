@@ -180,7 +180,9 @@ int main(int argc, char** argv) {
     std::cout << "処理時間：" << std::endl;
     std::cout << (double)(end - start)/CLOCKS_PER_SEC << std::endl;
   }
+  std::cout << (double)(end - start)/CLOCKS_PER_SEC << std::endl;
 }
+
 
 void get_data(std::vector<std::vector<double>>& mat, const std::string& file_name) {
   std::ifstream data_file (file_name);
