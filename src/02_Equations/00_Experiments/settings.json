@@ -1,6 +1,6 @@
 {
-  "processor": "../01_Cramer_Leibniz/processor",
-  "data_file": "../01_Cramer_Leibniz/results/data.csv",
-  "equation_record": "../01_Cramer_Leibniz/results/equation.csv",
-  "clock_record": "../01_Cramer_Leibniz/results/clock.csv"
+  "processor": "../02_Gaussian/processor",
+  "data_file": "../02_Gaussian/results/data.csv",
+  "equation_record": "../02_Gaussian/results/equation.csv",
+  "clock_record": "../02_Gaussian/results/clock.csv"
 }

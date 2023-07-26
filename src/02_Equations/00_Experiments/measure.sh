@@ -2,7 +2,7 @@
 JSON_URL=settings.json
 DATA_GENERATOR=data_generator
 EXACT_PROCESSOR=exact_equation.py
-MAX=10
+MAX=1000
 
 JSON_DATA=$(cat $JSON_URL)
 PROCESSOR=$(echo $JSON_DATA | jq -r ".processor")
@@ -13,7 +13,7 @@ echo -n "" > $EQUATION_RECORD
 echo -n "" > $CLOCK_RECORD
 echo -n "" > $DATA_FILE
 
-for i in {3..10} # $(seq 50 50 500) $(seq 600 100 1000) # N
+for i in $(seq 50 50 500) $(seq 600 100 1000) # N
 do
   for j in {0..9} # seed
   do
