@@ -13,7 +13,6 @@ int main(int argc, char** argv) {
   unsigned int significant_figures = 15;
   std::vector<std::vector<double>> mat, swap_mat;
   const int N = get_T_data(mat, file_name);
-  swap_mat = std::vector<std::vector<double>>(N+1, std::vector<double>(N, 0));
 
   clock_t start = clock();
   double det_A = get_determinant(mat, N);
@@ -23,12 +22,7 @@ int main(int argc, char** argv) {
   }
   for (int i = 0; i < N; i++) {
     mat[i].swap(mat[N]);
-    for (int j = 0; j < N; j++) {
-      for (int k = 0; k < N; k++) {
-        swap_mat[j][k] = mat[j][k];
-      }
-    }
-    double swap_det = get_determinant(swap_mat, N);
+    double swap_det = get_determinant(mat, N);
     mat[i].swap(mat[N]);
     std::cout << std::setprecision(significant_figures) << swap_det/det_A << " ";
   }
@@ -165,14 +159,21 @@ int get_T_data(std::vector<std::vector<double>>& mat, const std::string& file_na
 }
 
 double get_determinant(std::vector<std::vector<double>>& mat, int N) {
+  std::vector<std::vector<double>> swap_mat;
+  swap_mat = std::vector<std::vector<double>>(N, std::vector<double>(N, 0));
+  for (int j = 0; j < N; j++) {
+    for (int k = 0; k < N; k++) {
+      swap_mat[j][k] = mat[j][k];
+    }
+  }
   double determinant = 1;
   for (int c = 0; c < N; ++c) {
-    double pivot = mat[c][c];
+    double pivot = swap_mat[c][c];
     if (pivot == 0) {
       for (int i = c+1; i < N; ++i) {
-        if (mat[i][c] == 0) continue;
-        pivot = mat[i][c];
-        mat[i].swap(mat[c]);
+        if (swap_mat[i][c] == 0) continue;
+        pivot = swap_mat[i][c];
+        swap_mat[i].swap(swap_mat[c]);
         determinant *= -1;
         break;
       }
@@ -183,9 +184,9 @@ double get_determinant(std::vector<std::vector<double>>& mat, int N) {
     }
     determinant *= pivot;
     for (int i = c+1; i < N; ++i) {
-      double numerator = mat[i][c] / pivot;
+      double numerator = swap_mat[i][c] / pivot;
       for (int j = c+1; j < N; ++j) {
-        mat[i][j] -= mat[c][j] * numerator;
+        swap_mat[i][j] -= swap_mat[c][j] * numerator;
       }
     }
   }
