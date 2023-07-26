@@ -38,6 +38,7 @@ int main(int argc, char** argv) {
   }
   std::cout << std::endl;
   clock_t end = clock();
+  std::cout << (double)(end - start)/CLOCKS_PER_SEC << std::endl;
   /*
   int coe_mat_rank = N - skip_col.size();
   if (one_equation) {
