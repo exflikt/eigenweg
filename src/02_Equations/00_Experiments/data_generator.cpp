@@ -18,7 +18,10 @@ int main(int argc, char** argv) {
 
   std::ofstream data_file (file_name);
   if (!data_file.is_open()) return 1;
-  data_file << N << std::endl;
+  // Cramer2
+  data_file << N << "," << N+1 << std::endl;
+  // Gaussian
+  // data_file << N << std::endl;
 
   std::mt19937 engine(seed);
   std::uniform_real_distribution<double> dist(min, max);
@@ -27,7 +30,10 @@ int main(int argc, char** argv) {
   for (int i = 0; i < N; ++i) {
     data_file << std::setprecision(significant_figures) << dist(engine) * dist_bin(engine);
     for (int j = 0; j < N; ++j) {
-      data_file << " " << std::setprecision(significant_figures) << dist(engine) * dist_bin(engine);
+      // Gaussian
+      // data_file << " " << std::setprecision(significant_figures) << dist(engine) * dist_bin(engine);
+      // Cramer2
+      data_file << "," << std::setprecision(significant_figures) << dist(engine) * dist_bin(engine);
     }
     data_file << std::endl;
   }
