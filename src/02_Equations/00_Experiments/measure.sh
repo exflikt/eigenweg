@@ -25,11 +25,13 @@ do
     PYTHON=`python3 $EXACT_PROCESSOR`
     (
       echo -n $i $j $EQUATION
+      echo -n " "
       for k in `seq ${i} $(($MAX-1))`
       do 
         echo -n "0 "
       done
       echo -n $PYTHON
+      echo -n " "
       for k in `seq ${i} $(($MAX-1))`
       do 
         echo -n "0 "
