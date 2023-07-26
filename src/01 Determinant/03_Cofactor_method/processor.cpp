@@ -6,8 +6,7 @@
 #include <time.h>
 
 bool get_data(std::vector<std::vector<double>>& mat, const std::string& file_name);
-
-double cofactor(std::vector<std::vector<double>>& mat, int n);
+double get_cofactor(std::vector<std::vector<double>>& mat, int n);
 
 int main(int argc, char** argv) {
   const std::string file_name = argv[1];
@@ -17,30 +16,8 @@ int main(int argc, char** argv) {
   const int N = mat.size();
 
   clock_t start = clock();
-  double determinant = 1;
-  for (int c = 0; c < N; ++c) {
-    double pivot = mat[c][c];
-    if (pivot == 0) {
-      for (int i = c+1; i < N; ++i) {
-        if (mat[i][c] == 0) continue;
-        pivot = mat[i][c];
-        mat[i].swap(mat[c]);
-        determinant *= -1;
-        break;
-      }
-      if (pivot == 0) {
-        determinant = 0;
-        break;
-      }
-    }
-    determinant *= pivot;
-    for (int i = c+1; i < N; ++i) {
-      double numerator = mat[i][c] / pivot;
-      for (int j = c+1; j < N; ++j) {
-        mat[i][j] -= mat[c][j] * numerator;
-      }
-    }
-  }
+  double determinant = get_cofactor(mat, N);
+  // double determinant = 1;
   clock_t end = clock();
   std::cout << std::setprecision(significant_figures) << determinant << std::endl;
   std::cout << (double)(end - start)/CLOCKS_PER_SEC << std::endl;
@@ -61,6 +38,20 @@ bool get_data(std::vector<std::vector<double>>& mat, const std::string& file_nam
   return false;
 }
 
-double cofactor(std::vector<std::vector<double>>& mat, int n) {
-  
+double get_cofactor(std::vector<std::vector<double>>& mat, int n) {
+  if (n == 1) {
+    return mat[0][0];
+  }
+  double cofactor = 0;
+  int sgn = 1;
+  cofactor += sgn * mat[n-1][n-1] * get_cofactor(mat, n-1);
+  for (int i = 0; i < n-1; i++) {
+    mat[n-2-i].swap(mat[n-1]);
+    sgn *= -1;
+    cofactor += sgn * mat[n-1][n-1] * get_cofactor(mat, n-1);
+  }
+  for (int i = 0; i < n-1; i++) {
+    mat[i].swap(mat[n-1]);
+  }
+  return cofactor;
 }

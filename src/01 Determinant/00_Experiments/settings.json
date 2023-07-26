@@ -1,6 +1,6 @@
 {
-  "processor": "../01_Leibniz_method/processor",
-  "data_file": "../01_Leibniz_method/results/data.csv",
-  "determinant_record": "../01_Leibniz_method/results/determinant.csv",
-  "clock_record": "../01_Leibniz_method/results/clock.csv"
+  "processor": "../03_Cofactor_method/processor",
+  "data_file": "../03_Cofactor_method/results/data.csv",
+  "determinant_record": "../03_Cofactor_method/results/determinant.csv",
+  "clock_record": "../03_Cofactor_method/results/clock.csv"
 }

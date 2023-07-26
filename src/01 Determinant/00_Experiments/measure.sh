@@ -22,6 +22,6 @@ do
     echo "$i $j $CLOCK" >> $CLOCK_RECORD
     PYTHON=`python3 $EXACT_PROCESSOR`
     echo $i $j $DETERMINANT $PYTHON >> $DETERMINANT_RECORD
+    echo "${i},${j}"
   done
-  echo "${i}"
 done
