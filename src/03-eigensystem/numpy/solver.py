@@ -19,9 +19,8 @@ mat = np.genfromtxt(input_path, skip_header=1, delimiter=',')
 np_vals, np_vecs = np.linalg.eig(mat)
 np_vals, np_vecs = eigen_sort(np_vals, np_vecs)
 
-print('np_vals :')
-print(np_vals)
-print(f'np_vecs :')
+print('固有値:', np_vals)
+print('固有ベクトル:')
 print(np_vecs)
 
 n = np_vals.size
