@@ -3,7 +3,7 @@
 # 入力したファイルと正当の誤差を計算するスクリプト
 #
 # Usage:
-#       python compute-error.py method n
+#       ./compute-error.py method n
 #
 # * method: jacobi or ql
 # * n: 10, 20, 50, 100, 200, 500, 1000
